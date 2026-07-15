@@ -22,13 +22,13 @@ class VSOSet(Dataset):
                         if (i + str(j)) in df.columns:
                             cols.append(i + str(j))
             if len(cols) == 0:
-                cols.append("total")
+                cols.append("score")
             for col in cols:
                 for i in df.index:
                     for j in df.index:
                         if j < i:
                             self.data.append(
-                                (df["name"][i], f["name"][j], df[col][i] > df[col][j])
+                                (df["name"][i], df["name"][j], df[col][i] > df[col][j])
                             )
                         else:
                             break
