@@ -8,30 +8,7 @@ class VSOSet(Dataset):
     def __init__(self, directory):
         directory = Path(directory)
         self.data = []
-        for i in directory.iterdir():
-            print("Processing", i)
-            if i.is_dir():
-                continue
-            df = pd.read_csv(i)
-            cols = []
-            for i in "ABCDEFGH":
-                if i in df.columns:
-                    cols.append(i)
-                else:
-                    for j in range(8):
-                        if (i + str(j)) in df.columns:
-                            cols.append(i + str(j))
-            if len(cols) == 0:
-                cols.append("score")
-            for col in cols:
-                for i in df.index:
-                    for j in df.index:
-                        if j < i:
-                            self.data.append(
-                                (df["name"][i], df["name"][j], df[col][i] > df[col][j])
-                            )
-                        else:
-                            break
+        d1 = pd.read_csv(directory / "belchonok.csv")
 
     def __len__(self):
         return len(self.data)
